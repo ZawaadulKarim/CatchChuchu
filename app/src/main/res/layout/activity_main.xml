@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="@drawable/cs125bg">
+    <TextView
+        android:id="@+id/scoreLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Score : 0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingVertical="14dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:background="@android:color/background_light"/>
+    <FrameLayout
+        android:id="@+id/gameFrame"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/geoff"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/geoff_right"
+            android:layout_gravity="bottom"
+            android:visibility="invisible"/>
+        <ImageView
+            android:id="@+id/checkstyle"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/checkstyle"
+            android:visibility="invisible"/>
+        <ImageView
+            android:id="@+id/chuchu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/chuchu"
+            android:visibility="invisible"/>
+        <ImageView
+            android:id="@+id/xyz"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/xyz"
+            android:visibility="invisible"/>
+        <LinearLayout
+            android:id="@+id/startLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CATCH CHUCHU!"
+                android:textSize="24sp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:id="@+id/highScoreLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Highscore : 10"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="80dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="START"
+                android:layout_marginTop="60dp"
+                android:onClick="startGame"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quit"
+                android:layout_marginTop="20dp"
+                android:onClick="quitGame"/>
+        </LinearLayout>
+
+
+
+
+
+
+
+    </FrameLayout>
+
+
+
+</LinearLayout>
