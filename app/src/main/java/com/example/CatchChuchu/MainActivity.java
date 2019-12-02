@@ -1,9 +1,13 @@
 package com.example.CatchChuchu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +25,14 @@ import com.example.CatchChuchu.R;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+
+import be.tarsos.dsp.AudioDispatcher;
+import be.tarsos.dsp.AudioEvent;
+import be.tarsos.dsp.AudioProcessor;
+import be.tarsos.dsp.io.android.AudioDispatcherFactory;
+import be.tarsos.dsp.pitch.PitchDetectionHandler;
+import be.tarsos.dsp.pitch.PitchDetectionResult;
+import be.tarsos.dsp.pitch.PitchProcessor;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    33);
+
+        }
         soundplayer = new SoundPlayer(this);
 
         gameFrame = findViewById(R.id.gameFrame);
@@ -91,6 +111,35 @@ public class MainActivity extends AppCompatActivity {
         settings = getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
         highScore = settings.getInt("HIGH_SCORE", 0);
         highScoreLabel.setText("Highscore :" + highScore);
+
+
+        // CREDIT TO https://medium.com/@juniorbump/pitch-detection-in-android-using-tarsosdsp-a2dd4a3f04e9
+        // Tarsos DSP lib used
+        AudioDispatcher dispatcher =
+                AudioDispatcherFactory.fromDefaultMicrophone(22050,1024,0);
+        PitchDetectionHandler pitchhandler = new PitchDetectionHandler() {
+            @Override
+            public void handlePitch(PitchDetectionResult res, AudioEvent e){
+                final float pitchInHz = res.getPitch();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (startFlag) {
+                            if (pitchInHz >= 145) {
+                                actionFlag = true;
+                            } else {
+                                actionFlag = false;
+                            }
+                        }
+                    }
+                });
+            }
+        };
+        AudioProcessor pitchProcessor = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050, 1024, pitchhandler);
+        dispatcher.addAudioProcessor(pitchProcessor);
+
+        Thread audioThread = new Thread(dispatcher, "Audio Thread");
+        audioThread.start();
 
     }
 
@@ -154,9 +203,8 @@ public class MainActivity extends AppCompatActivity {
             xyz.setY(xyzY);
         }
 
-        //SomethingChallenHates (possiblyCheckstyle???)
 
-        checkstyleY = checkstyleY + 35;
+        checkstyleY = checkstyleY + 15;
 
         float checkstyleCenterX = checkstyleX + checkstyle.getWidth() / 2;
         float checkstyleCenterY = checkstyleY + checkstyle.getHeight() / 2;
@@ -259,16 +307,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
-        if (startFlag) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                actionFlag = true;
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                actionFlag = false;
-            }
-        }
-        return true;
-    }
 
     public void startGame(View view) {
         startFlag = true;
