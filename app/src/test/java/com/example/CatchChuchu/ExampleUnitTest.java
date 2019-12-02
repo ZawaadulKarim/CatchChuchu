@@ -1,4 +1,4 @@
-package com.example.catchgame;
+package com.example.CatchChuchu;
 
 import org.junit.Test;
 
