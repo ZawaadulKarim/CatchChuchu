@@ -1,20 +1,27 @@
 package com.example.CatchChuchu;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private int frameWidth;
     private int  inititalFrameWidth;
     private LinearLayout startLayout;
+    private LinearLayout pauseLayout;
+    private LinearLayout howToLayout;
 
     private ImageView geoff;
     private ImageView checkstyle;
@@ -96,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
         gameFrame = findViewById(R.id.gameFrame);
         startLayout = findViewById(R.id.startLayout);
+        pauseLayout = findViewById(R.id.pausegame);
+        howToLayout = findViewById(R.id.howToPlay);
         geoff = findViewById(R.id.geoff);
         checkstyle = findViewById(R.id.checkstyle);
         chuchu = findViewById(R.id.chuchu);
@@ -307,6 +318,61 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void homePage(View view) {
+        startFlag = false;
+        howToLayout.setVisibility(View.VISIBLE);
+        startLayout.setVisibility(View.GONE);
+        Button goBack = findViewById(R.id.homeButton);
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                howToLayout.setVisibility(View.GONE);
+                startLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
+
+    public void whenPaused() {
+        onPause();
+        actionFlag = false;
+        startFlag = false;
+        xyzFlag = false;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.dialog_pause, null))
+                .setPositiveButton("Quit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                        System.exit(0);
+                    }
+                })
+                .setNegativeButton("Resume", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        onResume();
+                        actionFlag = true;
+                        startFlag = true;
+                        xyzFlag = true;
+                    }
+                });
+        builder.create().show();
+    }
+
+
+    @Override
+    protected void onUserLeaveHint()
+    {
+        Log.d("onUserLeaveHint","Home button pressed");
+        super.onUserLeaveHint();
+        whenPaused();
+    }
+
+    @Override
+    public void onBackPressed() {
+        whenPaused();
+    }
 
     public void startGame(View view) {
         startFlag = true;
@@ -361,11 +427,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void quitGame(View view) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            finishAndRemoveTask();
-        } else {
-            finish();
-        }
-
+        finish();
+        System.exit(0);
     }
 }

@@ -51,113 +51,91 @@
             android:src="@drawable/xyz"
             android:visibility="invisible"/>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/pausegame"
-            android:gravity="center"
-            android:layout_gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Game Paused!"
-                android:textSize="24sp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="20dp"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Resume"
-                android:layout_marginTop="60dp"/>
-<!--                android:onClick="resumeGame"-->
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quit"
-                android:layout_marginTop="20dp"
-                android:onClick="quitGame"/>
-        </LinearLayout>
-
         <LinearLayout
             android:id="@+id/startLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:layout_gravity="center">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="CATCH CHUCHU!"
-                android:textSize="24sp"
                 android:textColor="@color/colorAccent"
-                android:layout_marginTop="20dp"/>
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/highScoreLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
                 android:text="Highscore : 10"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginTop="80dp"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="START"
-                android:layout_gravity="center"
-                android:layout_marginTop="60dp"
-                android:onClick="startGame"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="How to Play"
-                android:layout_marginTop="60dp"/>
-<!--                android:onClick="howTo"-->
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quit"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:onClick="startGame"
+                android:text="START" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:onClick="homePage"
+                android:text="How to Play" />
+            <!--                android:onClick="howTo"-->
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:onClick="quitGame"/>
+                android:onClick="quitGame"
+                android:text="Quit" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/howToPlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical"
-            android:layout_gravity="center">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:text="How To Play"
-                android:textSize="24sp"
                 android:textColor="@color/colorAccent"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"/>
+                android:textSize="24sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You will need to control Geoff by emitting a sound that has a pitch higher than the D note (146 Hz) The player scores points for catching chuchu.The play area decreases if the player catches checkstyle and the play area increases if the player catches xyz. The game ends when the play area is no more. Game created by Zawaadul Karim and Rishy Rane for UIUC CS 125 Final Project."
-                android:textSize="12sp"
-                android:textColor="@color/colorAccent"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_gravity="center"/>
+                android:text="You will need to control Geoff by emitting a sound that has a pitch higher than the D note (146 Hz) The player scores points for catching chuchu.The play area decreases if the player catches checkstyle and the play area increases if the player catches xyz. The game ends when the play area is no more. Press the back button to pause the game. Game created by Zawaadul Karim and Rishy Rane for UIUC CS 125 Final Project."
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp" />
 
             <Button
+                android:id="@+id/homeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="START"
+                android:layout_gravity="center"
                 android:layout_marginTop="60dp"
-                android:onClick="startGame"
-                android:layout_gravity="center"/>
+                android:onClick="homePage"
+                android:text="Back"
+                tools:visibility="visible" />
 
         </LinearLayout>
 
