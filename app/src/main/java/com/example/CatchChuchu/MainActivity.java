@@ -7,8 +7,10 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -85,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean xyzFlag = false;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
         audioThread.start();
 
     }
+
+    //https://www.youtube.com/watch?v=rs10f5MsKEQ
 
     public void changePos() {
 
